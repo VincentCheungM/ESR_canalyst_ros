@@ -1,0 +1,3 @@
+[submodule "astuff_sensor_msgs"]
+	path = astuff_sensor_msgs
+	url = https://github.com/astuff/astuff_sensor_msgs.git

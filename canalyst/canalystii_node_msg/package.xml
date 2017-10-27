@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package>
+  <name>canalystii_node_msg</name>
+  <version>0.0.1</version>
+
+  <description>
+  canalystii_node message
+  </description>
+
+  <maintainer email="vincent.cheung.mcer@gmail.com">vincent.cheung</maintainer>
+
+  <license>BSD</license>
+
+  <author email="vincent.cheung.mcer@gmail.com">vincent.cheung</author>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>message_generation</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  
+  
+  <run_depend>message_runtime</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+
+
+  <export></export>
+
+</package>
