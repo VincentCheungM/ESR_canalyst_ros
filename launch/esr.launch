@@ -1,0 +1,7 @@
+<launch>
+  <node pkg="tf"            type="static_transform_publisher" name="link2_broadcaster" args="0 0.1 0.1 -1.57 0 0 velodyne esr_node 100" />
+  <node pkg="canalystii_node" type="canalystii_node_ros" name="canalystii_node_ros"/>
+  <node pkg="esr_node" type="esr_node" name="esr_node"/>
+</launch>
+
+
