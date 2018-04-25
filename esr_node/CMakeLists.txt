@@ -27,7 +27,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   CATKIN_DEPENDS geometry_msgs roscpp rospy std_msgs canalystii_node_msg delphi_esr_msgs sensor_msgs visualization_msgs
-  INCLUDE_DIRS include
+  #INCLUDE_DIRS include
 )
 
 ###########
@@ -53,6 +53,7 @@ include_directories(
 
 ## Declare a C++ executable
 add_executable(esr_node src/esr_node.cpp)
+add_dependencies(esr_node ${canalystii_node_msg_EXPORTED_TARGETS})
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above

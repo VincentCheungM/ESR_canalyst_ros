@@ -33,4 +33,5 @@ catkin_package(
 #target_link_libraries(canalystii_node_ros canalystii canalystii_node ${PROJECT_SOURCE_DIR}/lib/libcontrolcan.so ${catkin_LIBRARIES})
 
 add_executable(canalystii_node_ros src/canalystii_node_ros.cpp src/canalystii.cpp src/canalystii_node.cpp) 
+add_dependencies(canalystii_node_ros ${canalystii_node_msg_EXPORTED_TARGETS})
 target_link_libraries(canalystii_node_ros ${PROJECT_SOURCE_DIR}/lib/libcontrolcan.so ${catkin_LIBRARIES})
