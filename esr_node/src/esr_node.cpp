@@ -27,7 +27,9 @@
 // bytes to sign
 #define B2SIGN(x) ((x)==1?-1:1)
 // bytes to complement
-#define B2COMP(x) ((512)-(x)) 
+#define B2COMP1(x) ((64)-(x))
+#define B2COMP2(x) ((1024)-(x))
+#define B2COMP3(x) ((16384)-(x))
 
 class Esr_node
 {
@@ -98,39 +100,39 @@ delphi_esr_msgs::EsrTrack Esr_node::set_track_msg(const canalystii_node_msg::can
 
     //sign value
     if(B2SIGN((in_can_msg->data[0]&0x80)>>7)==-1){
-        track_msg.track_lat_rate = -B2COMP((in_can_msg->data[0]&0x7C)>>2);
+        track_msg.track_lat_rate = (-B2COMP1((in_can_msg->data[0]&0xFC)>>2))*0.25;
     }else{
-        track_msg.track_lat_rate = (in_can_msg->data[0]&0x7C)>>2;
+        track_msg.track_lat_rate = ((in_can_msg->data[0]&0xFC)>>2)*0.25;
     }
     
     track_msg.track_status = (in_can_msg->data[1]&0xE0)>>5;
 
     //sign value
     if(B2SIGN((in_can_msg->data[1]&0x10)>>4)==-1){
-        track_msg.track_angle = -B2COMP((((in_can_msg->data[1]&0x0F)<<5)|(in_can_msg->data[2]>>3)))*0.1;
+        track_msg.track_angle = -B2COMP2((((in_can_msg->data[1]&0x1F)<<5)|((in_can_msg->data[2]&0xF8)>>3)))*0.1;
     }else{
-        track_msg.track_angle = (((in_can_msg->data[1]&0x0F)<<5)|(in_can_msg->data[2]>>3))*0.1;
+        track_msg.track_angle = (((in_can_msg->data[1]&0x1F)<<5)|((in_can_msg->data[2]&0xF8)>>3))*0.1;
     }
 
-    track_msg.track_range = (((in_can_msg->data[2]&0x07)<<8)+in_can_msg->data[3])*0.1;
+    track_msg.track_range = (((in_can_msg->data[2]&0x07)<<8)|in_can_msg->data[3])*0.1;
     track_msg.track_bridge_object = (in_can_msg->data[4]&0x80)>>7;
     track_msg.track_rolling_count = (in_can_msg->data[4]&0x40)>>6;
-    track_msg.track_width = (in_can_msg->data[4]&0x3C)>>2; 
+    track_msg.track_width = ((in_can_msg->data[4]&0x3C)>>2)*0.5;
 
     //sign value
     if(B2SIGN((in_can_msg->data[4]&0b00000010)>>1)==-1){
-        track_msg.track_range_accel = -B2COMP((((in_can_msg->data[4]&0x01)<<8)+in_can_msg->data[5]))*0.05;
+        track_msg.track_range_accel = -B2COMP2((((in_can_msg->data[4]&0x03)<<8)+in_can_msg->data[5]))*0.05;
     }else{
-        track_msg.track_range_accel = (((in_can_msg->data[4]&0x01)<<8)+in_can_msg->data[5])*0.05;
+        track_msg.track_range_accel = (((in_can_msg->data[4]&0x03)<<8)+in_can_msg->data[5])*0.05;
     }    
 
     track_msg.track_med_range_mode = ((in_can_msg->data[6]&0xC0)>>6);
 
     //sign value
     if(B2SIGN((in_can_msg->data[6]&0b00100000)>>5)==-1){
-        track_msg.track_range_rate = -B2COMP((((in_can_msg->data[6]&0x1F)<<8)+in_can_msg->data[7]))*0.01;
+        track_msg.track_range_rate = -B2COMP3((((in_can_msg->data[6]&0x3F)<<8)|in_can_msg->data[7]))*0.01;
     }else{
-        track_msg.track_range_rate = (((in_can_msg->data[6]&0x1F)<<8)+in_can_msg->data[7])*0.01;//sign
+        track_msg.track_range_rate = (((in_can_msg->data[6]&0x3F)<<8)|in_can_msg->data[7])*0.01;//sign
     }
 
     return track_msg;
